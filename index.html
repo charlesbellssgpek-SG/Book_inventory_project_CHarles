@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Book Shop Inventory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Book Shop Inventory</h1>
+
+        <div class="form-section">
+            <h2>Add New Book</h2>
+            <div class="form-group">
+                <input type="text" id="titleInput" placeholder="Title" />
+                <input type="text" id="authorInput" placeholder="Author" />
+                <select id="statusInput">
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                    <option value="sold">Sold</option>
+                </select>
+                <button onclick="addBook()">Add Book</button>
+            </div>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="form-section">
+            <h2>Search & Filter</h2>
+            <div class="form-group">
+                <input type="text" id="searchInput" placeholder="Search by title or author..." />
+                <select id="filterStatus">
+                    <option value="">All statuses</option>
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                    <option value="sold">Sold</option>
+                </select>
+                <select id="sortBy" class="sort-select">
+                    <option value="id">Sort: ID</option>
+                    <option value="title">Sort: Title</option>
+                    <option value="author">Sort: Author</option>
+                </select>
+                <button onclick="clearFilters()">Clear</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="booksTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit  inventory books -->
+    <div id="editModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>Edit Book</h2>
+            <div class="form-group">
+                <label>Title:</label>
+                <input type="text" id="editTitle" placeholder="Title" />
+            </div>
+            <div class="form-group">
+                <label>Author:</label>
+                <input type="text" id="editAuthor" placeholder="Author" />
+            </div>
+            <div class="form-group">
+                <label>Status:</label>
+                <select id="editStatus">
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                    <option value="sold">Sold</option>
+                </select>
+            </div>
+            <button onclick="saveEdit()">Save</button>
+            <button onclick="closeEditModal()" style="background-color:#999;">Cancel</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Python CheatCodes",
+    "author": "Charles",
+    "status": "borrowed",
+    "id": 1
+  },
+  {
+    "title": "X'Mas Dinner Recipes With Chefs",
+    "author": "Gordon Ramsey",
+    "status": "available",
+    "id": 2
+  }
+]
