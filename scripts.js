@@ -1,6 +1,6 @@
 // Load books from server (inventory.json via API)
 let books = [];
-let nextId = 1;
+let nextId = 1; // assign nextId based on existing data after load
 
 // debounce helper
 function debounce(fn, delay) {
@@ -10,7 +10,7 @@ function debounce(fn, delay) {
         t = setTimeout(() => fn.apply(this, args), delay);
     };
 }
-
+// Load books from server 
 function loadBooks() {
     axios.get('/api/books')
         .then(resp => {
@@ -25,7 +25,7 @@ function loadBooks() {
             if (tbody) tbody.innerHTML = '<tr><td colspan="5">Unable to load books. Ensure the server is running.</td></tr>';
         });
 }
-
+// Render books table with current filters and sorting 
 function renderTable() {
     const tbody = document.getElementById('booksTableBody');
     if (!tbody) return;
@@ -56,16 +56,19 @@ function renderTable() {
         if (va > vb) return 1;
         return 0;
     });
-
+// Render rows or show no data message or file  json not found
     if (filtered.length === 0) {
         tbody.innerHTML = '<tr><td colspan="5">No books found.</td></tr>';
         return;
     }
-
+// Loop through filtered books and create table rows and show status;
     filtered.forEach(book => {
         const row = document.createElement('tr');
         const statusClass = `status ${book.status || ''}`.trim();
         const statusText = ((book.status || '').charAt(0).toUpperCase() + (book.status || '').slice(1)) || '';
+// Build action options based on status
+// Render table row
+// Display option to edit, borrow, return, sell, delete based on status
 
         row.innerHTML = `
             <td>${book.id || ''}</td>
@@ -88,6 +91,7 @@ function renderTable() {
         tbody.appendChild(row);
     });
 }
+// Add new book 
 
 function addBook() {
     const titleInput = document.getElementById('titleInput');
@@ -95,18 +99,19 @@ function addBook() {
     const statusInput = document.getElementById('statusInput');
 
     if (!titleInput || !authorInput) return;
+// Validate inputs if user forgot to fill
 
     if (titleInput.value.trim() === '' || authorInput.value.trim() === '') {
         alert('Please fill in both title and author.');
         return;
     }
-
+// Prepare new book data
     const newBook = {
         title: titleInput.value.trim(),
         author: authorInput.value.trim(),
         status: statusInput ? statusInput.value : 'available'
     };
-
+// Send POST request to server
     axios.post('/api/books', newBook)
         .then(() => {
             loadBooks();
@@ -119,6 +124,7 @@ function addBook() {
             alert('Failed to add book.');
         });
 }
+// Change book status (borrow, return, sell)
 
 function changeStatus(bookId, newStatus) {
     axios.patch(`/api/books/${bookId}`, { status: newStatus })
@@ -128,11 +134,11 @@ function changeStatus(bookId, newStatus) {
             alert('Failed to update book status.');
         });
 }
-
+// Delete book function
 function deleteBook(bookId) {
     const confirmed = window.confirm('Are you sure you want to delete this book? This action cannot be undone.');
     if (!confirmed) return;
-
+// Send DELETE request to server;
     axios.delete(`/api/books/${bookId}`)
         .then(() => loadBooks())
         .catch(err => {
@@ -143,6 +149,7 @@ function deleteBook(bookId) {
 
 let currentEditBookId = null;
 
+// open edit modal;
 function openEditModal(bookId) {
     const book = books.find(b => b.id === bookId);
     if (!book) return;
@@ -156,13 +163,14 @@ function openEditModal(bookId) {
     const modal = document.getElementById('editModal');
     if (modal) modal.style.display = 'block';
 }
+// close edit modal when user clicks outside or on close button
 
 function closeEditModal() {
     const modal = document.getElementById('editModal');
     if (modal) modal.style.display = 'none';
     currentEditBookId = null;
 }
-
+// Save edited book details, if any details not entered it will dispplay error message;
 function saveEdit() {
     if (!currentEditBookId) return;
     const title = (document.getElementById('editTitle') || {}).value || '';
@@ -172,7 +180,7 @@ function saveEdit() {
         alert('Please fill in both title and author.');
         return;
     }
-
+// function to send PATCH request to server, if success reload books and close modal ekse show error message;
     axios.patch(`/api/books/${currentEditBookId}`, { title: title.trim(), author: author.trim(), status })
         .then(() => {
             loadBooks();
@@ -183,7 +191,7 @@ function saveEdit() {
             alert('Failed to update book.');
         });
 }
-
+// Handle action selection from dropdown check status and call respective functions;
 function handleAction(selectEl, bookId) {
     const action = selectEl.value;
     selectEl.value = '';
@@ -208,7 +216,7 @@ function handleAction(selectEl, bookId) {
             console.warn('Unknown action', action);
     }
 }
-
+// Clear all filters and reset table;
 function clearFilters() {
     const searchEl = document.getElementById('searchInput');
     const filterEl = document.getElementById('filterStatus');
@@ -218,7 +226,7 @@ function clearFilters() {
     if (sortEl) sortEl.value = 'id';
     renderTable();
 }
-
+// Initialize event listeners for controls on search, filter, sort with debounce for search input;
 function initControls() {
     const searchEl = document.getElementById('searchInput');
     const filterEl = document.getElementById('filterStatus');
