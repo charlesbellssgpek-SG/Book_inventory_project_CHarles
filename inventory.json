@@ -2,25 +2,37 @@
   {
     "title": "Python CheatCodes",
     "author": "Charles",
-    "status": "sold",
+    "status": "borrowed",
     "id": 1
   },
   {
     "title": "X'Mas Dinner Recipes With Chefs",
     "author": "Gordon Ramsey",
-    "status": "available",
+    "status": "sold",
     "id": 2
   },
   {
     "title": "Revision of HTML CSS",
     "author": "Paul Young",
-    "status": "borrowed",
+    "status": "available",
     "id": 3
   },
   {
     "title": "test",
     "author": "mark",
-    "status": "available",
+    "status": "sold",
     "id": 4
+  },
+  {
+    "title": "talk paul",
+    "author": "paul",
+    "status": "sold",
+    "id": 6
+  },
+  {
+    "title": "How to Wash the Dog",
+    "author": "Arthur",
+    "status": "reserved",
+    "id": 7
   }
 ]

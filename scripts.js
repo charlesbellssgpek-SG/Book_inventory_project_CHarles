@@ -84,6 +84,8 @@ function renderTable() {
                         ${book.status === 'borrowed' ? '<option value="return">Return</option>' : ''}
                         ${book.status !== 'sold' ? '<option value="sell">Sell</option>' : ''}
                         ${book.status !== 'sold' ? '<option value="delete">Delete</option>' : ''}
+                        ${book.status === 'available' ? '<option value="reserve">Reserve</option>' : ''}   
+                       
                     </select>
                 </div>
             </td>
@@ -147,7 +149,8 @@ function deleteBook(bookId) {
         });
 }
 
-let currentEditBookId = null;
+let currentEditBookId = null; // Delete selected book id for editing
+
 
 // open edit modal;
 function openEditModal(bookId) {
@@ -211,6 +214,9 @@ function handleAction(selectEl, bookId) {
             break;
         case 'delete':
             deleteBook(bookId);
+            break;
+        case 'reserve':
+            if (confirm('Reserve this book?')) changeStatus(bookId, 'reserved');
             break;
         default:
             console.warn('Unknown action', action);

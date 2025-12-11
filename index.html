@@ -23,6 +23,7 @@
                     <option value="available">Available</option>
                     <option value="borrowed">Borrowed</option>
                     <option value="sold">Sold</option>
+                    <option value="reserved">Reserved</option>
                 </select>
                 <button onclick="addBook()">Add Book</button>
             </div>
@@ -38,11 +39,13 @@
                     <option value="available">Available</option>
                     <option value="borrowed">Borrowed</option>
                     <option value="sold">Sold</option>
+                    <option value="reserved">Reserved</option>
                 </select>
                 <select id="sortBy" class="sort-select">
                     <option value="id">Sort: ID</option>
                     <option value="title">Sort: Title</option>
                     <option value="author">Sort: Author</option>
+                    <option value="status">Sort: Status</option>
                 </select>
                 <button onclick="clearFilters()">Clear</button>
             </div>
@@ -83,6 +86,9 @@
                     <option value="available">Available</option>
                     <option value="borrowed">Borrowed</option>
                     <option value="sold">Sold</option>
+                    <option value="reserved">Reserved</option>
+
+                    
                 </select>
             </div>
             <button onclick="saveEdit()">Save</button>

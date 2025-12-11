@@ -102,6 +102,20 @@ app.delete('/api/books/:id', async (req, res) => {
   }
 });
 
+app.reserved('/api/books/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    let books = await readData();
+    const idx = books.findIndex(b => b.id === id);
+    if (idx === -1) return res.status(404).json({ error: 'Not found' });
+    const reserved = books.splice(idx, 1)[0];
+    await writeData(books);
+    res.json(reserved);
+  } catch (err) {
+    res.status(500).json({ error: 'Unable to reserve data' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
